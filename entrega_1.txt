@@ -1,0 +1,36 @@
+TP Lavados - Modelos y Optimización 1
+
+Nombre: Florencia Sardella
+Padrón: 105717
+
+Impresión del problema:
+Para esta entrega hice un análisis de como lo solucionaría si lo hiciera con papel y lapiz. Me da la impresión de ser un TP
+con dificultad intermedia, con esto quiero decir que no me resulto ni muy dificil ni muy fácil. Me gusta que es un problema
+que me lleva a pensar distintas soluciones con el objetivo de optimizar los tiempos de lavados.
+
+Ideas:
+Para esta primera entrega lo que pense fue en ordenar las prendas a partir de sus tiempos de lavado en orden descendente.
+Esto lo hice pensando que el tiempo de un lavado es el tiempo que tarda la prenda más sucia en lavarse. Entonces, 
+si no hubiesen incompatibilidades en el problema y se pudieran poner todas las prendas en el mismo lavado, la solución
+que menos tiempo tarde será hacer un único lavado. De esta manera, el único lavado que se haga durará el tiempo que tarde
+en limpiar la prenda más sucia. Todo el resto de los tiempos de lavado de las otras prendas quedarían encapsuladas en esta
+última.
+Como, en cambio, en este problema hay incompatibilidades, lo primero que hice fue ver que prendas podrían lavarse juntas.
+Una vez que encontre las compatibilidades, tiendo la prendas ordenadas por tiempo de lavado descendente y teniendo en 
+cuenta la idea anterior, lo que hice fue asignarle un lavado a la prenda más sucia e incorporar en ese lavado todas las
+prendas que fueran compatibles a esta (de esta manera, todos los tiempos de las prendas compatibles estarían en una fracción
+de la primera). Así, recorrería todas las prendas buscando aquellas que no estuvieran en un lavado y asignandoles un lavado
+específico con sus compatibles.
+Luego, le realice una pequeña modificación a esta implementación que trajo mejores resultados.
+La diferencia se encuentra en que hacer cuando la próxima prenda a analizar ya se encuentra en un lavado.
+En el caso ya nombrado, no se hace nada, es decir que cuando se analiza una prenda que ya está en un lavado se pasa a 
+analizar la siguiente.
+En la nueva versión, en vez de pasar a la siguiente se analiza la prende. Lo que hago es ver que prendas compatibles a
+la prenda en analisis todavía no se encuentran en un lavado. De esta manera, hago que las prendas compatibles a la misma
+queden incorporadas a un lavado que tarde lo que tarda en lavarse la prenda en cuestión.
+Esta segunda implementación surgió al haberme dado cuenta que en la primera versión se hacían lavados de más.
+Como esta segunda versión dió mejores resultados opté por quedarme con la misma.
+
+Comentarios finales:
+Esta es una primera entrega, por lo que seguiré pensando en mejores formas de realizar los lavados e intentaré
+analizarlo con algún algoritmo que me permita ver más posibilidades.
