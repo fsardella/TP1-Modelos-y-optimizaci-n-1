@@ -21,70 +21,38 @@ def obtener_datos_enunciado():
                 tiempos[int(prenda)] = int(tiempo)
     return cant_prendas, incompatibilidades, tiempos
 
-
-def encontrar_compatibilidades(cant_prendas, incompatibilidades):
-    compatibilidades = {}
-    prendas = list(range(1, cant_prendas + 1))
-    for prenda in prendas:
-        # lista_completa.remove(incompatibilidades[n])
-        # compatibles = list(filter(lambda n_prenda: n_prenda not in incompatibilidades[prenda] and n_prenda != prenda, prendas))
-        compatibles = [n_prenda for n_prenda in prendas if n_prenda not in incompatibilidades[prenda] and n_prenda != prenda]
-        compatibilidades[prenda] = compatibles
-    return compatibilidades
-
-def esta_en_lavado(lavados, prenda):
-    for prendas in lavados.values():
-        if prenda in prendas:
-            return True
-    return False
-
-
-def obtener_nro_lavado(lavados, prenda):
-    for nro_lavado, prendas in lavados.items():
-        if prenda in prendas:
-            return nro_lavado
-
-def armar_lavados(prendas, compatibilidades):
-    '''Esta sería una primera versión donde se van agregando prendas según compatibilidad. Se
-    analizan las prendas por tiempo descendiente y se van agrando sus compatibles. Si una prenda
-    ya estaba no se analiza más'''
+def armar_lavados(prendas, incompatiblidades): # da 63
+    ''' Recibe una lista de prendas y un diccionario que tiene como clave
+        el número de una prenda y como valor una lista con las prendas
+        incompatibles a la misma.
+        Devuelve un diccionario que tiene como clave el número de lavado y
+        como valor una lista con todas las prendas que entran en el mismo
+        (teniendo en cuenta las restricciones dadas por las incompatibilidades).'''
     lavados = {}
-    i = 1
+    i = 0
     for prenda in prendas:
-        if esta_en_lavado(lavados, prenda):
-            continue
-        no_estan_en_lavado = [nro_prenda for nro_prenda in compatibilidades[prenda] if (esta_en_lavado(lavados, nro_prenda) == False)]
-        lavados[i] = no_estan_en_lavado + [prenda]
-        i += 1
-    return lavados
-
-def armar_lavados_v2(prendas, compatibilidades):
-    '''Esta sería una primera versión donde se van agregando prendas según compatibilidad. Se
-    analizan las prendas por tiempo descendiente y se van agrando sus compatibles. Si una prenda
-    ya estaba no se analiza más'''
-    lavados = {}
-    i = 1
-    for prenda in prendas:
-        no_estan_en_lavado = [nro_prenda for nro_prenda in compatibilidades[prenda] if (esta_en_lavado(lavados, nro_prenda) == False)]
-        if esta_en_lavado(lavados, prenda):
-            if len(no_estan_en_lavado) == 0:
-                # Si todas las prendas que son compatibles a la misma ya están en un
-                # lavado continue. Esto se debe a que como se analizan las prendas
-                # con tiempos de lavado descendente, si ya esta en un lavado, este
-                # será uno que ocupe más tiempo.
-                continue
-            lavados[i] = no_estan_en_lavado + [prenda]
-            n_lavado = obtener_nro_lavado(lavados, prenda)
-            lavados[n_lavado].remove(prenda) # lo saco de su lavado original
+        if len(lavados) == 0:  # si no había ninguna prenda para lavar, no analizo restricciones
+            lavados[i] = [prenda]
             i += 1
             continue
-        lavados[i] = no_estan_en_lavado + [prenda]
-        i += 1
+        for n_lavado, prendas_lavado in lavados.items():
+            agregar_prenda = True
+            for prenda_lavado in prendas_lavado:
+                if prenda in incompatiblidades[prenda_lavado]:
+                    # si en el lavado hay una prenda incompatible no se puede agregar al mismo
+                    agregar_prenda = False
+            if agregar_prenda:
+                lavados[n_lavado] += [prenda]
+                break
+        if not agregar_prenda:
+            # no pudo formar parte de ningún lavado existente, creamos uno nuevo
+            lavados[i] = [prenda]
+            i += 1
     return lavados
 
 def chequear_tiempos(lavados, tiempos):
     tiempo_total = 0
-    for n, prendas in lavados.items():
+    for prendas in lavados.values():
         tiempo_max = 0
         for prenda in prendas:
             tiempo = tiempos[prenda]
@@ -101,28 +69,21 @@ def cargar_resultado(lavados):
 
 def main():
     cant_prendas, incompatibilidades, tiempos = obtener_datos_enunciado()
-    compatibilidades = encontrar_compatibilidades(cant_prendas, incompatibilidades)
 
+    # ordeno las prendas por orden de tiempo de lavado descendente
+    tiempos_ordenados = sorted(tiempos.items(), key=lambda x: x[1])
+    prendas_ordenadas = []
+    for prenda, tiempo in tiempos_ordenados:
+        prendas_ordenadas.append(prenda)
+    prendas_ordenadas = prendas_ordenadas[::-1]
+    
+    print(f"prendas = {prendas_ordenadas}")
 
-    # ordeno las prendas por orden de lavado descendente
-    sortedTiempos = sorted(tiempos.items(), key=lambda x: x[1])
-    valores = []
-    for prenda, tiempo in sortedTiempos:
-        valores.append(prenda)
-    valores = valores[::-1]
+    lavados_desordenados = armar_lavados(range(1, 21), incompatibilidades)
+    lavados_ordenados = armar_lavados(prendas_ordenadas, incompatibilidades)
+    print(f"El lavado sin ordenar tarda {chequear_tiempos(lavados_desordenados, tiempos)}")
+    print(f"El lavado ordenado tarda {chequear_tiempos(lavados_ordenados, tiempos)}")
 
-    print(f"valores {valores}")
-
-    print("lavados v1")
-    lavados1 = armar_lavados(valores, compatibilidades)
-    print(f"lavados 1 {lavados1}")
-    print(f"lavados 1 {chequear_tiempos(lavados1, tiempos)}")
-
-    print("voy a armar lavados v2")
-    lavados2 = armar_lavados_v2(valores, compatibilidades)
-    print(f"lavados 2 {lavados2}")
-    print(f"lavados 2 {chequear_tiempos(lavados2, tiempos)}")
-
-    cargar_resultado(lavados2)
+    cargar_resultado(lavados_ordenados)
 
 main()

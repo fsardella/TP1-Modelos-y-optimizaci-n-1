@@ -4,33 +4,36 @@ Nombre: Florencia Sardella
 Padrón: 105717
 
 Impresión del problema:
-Para esta entrega hice un análisis de como lo solucionaría si lo hiciera con papel y lapiz. Me da la impresión de ser un TP
-con dificultad intermedia, con esto quiero decir que no me resulto ni muy dificil ni muy fácil. Me gusta que es un problema
-que me lleva a pensar distintas soluciones con el objetivo de optimizar los tiempos de lavados.
+Para esta entrega hice un análisis de como lo solucionaría si lo hiciera con papel y lapiz o en la vida real.
+Me da la impresión de ser un TP con dificultad intermedia, con esto quiero decir que no parece ser ni muy dificil
+ni muy fácil. Me gusta que es un problema que me lleva a pensar distintas soluciones con el objetivo de optimizar
+los tiempos de lavados. Al intertar resolverlo me tope con muchas dificultades en cuanto a como utilizar las 
+restricciones dadas por las incompatibilidades. Lo terminé resolviendo como lo haría en una situación real.
 
 Ideas:
 Para esta primera entrega lo que pense fue en ordenar las prendas a partir de sus tiempos de lavado en orden descendente.
 Esto lo hice pensando que el tiempo de un lavado es el tiempo que tarda la prenda más sucia en lavarse. Entonces, 
 si no hubiesen incompatibilidades en el problema y se pudieran poner todas las prendas en el mismo lavado, la solución
-que menos tiempo tarde será hacer un único lavado. De esta manera, el único lavado que se haga durará el tiempo que tarde
-en limpiar la prenda más sucia. Todo el resto de los tiempos de lavado de las otras prendas quedarían encapsuladas en esta
-última.
-Como, en cambio, en este problema hay incompatibilidades, lo primero que hice fue ver que prendas podrían lavarse juntas.
-Una vez que encontre las compatibilidades, tiendo la prendas ordenadas por tiempo de lavado descendente y teniendo en 
-cuenta la idea anterior, lo que hice fue asignarle un lavado a la prenda más sucia e incorporar en ese lavado todas las
-prendas que fueran compatibles a esta (de esta manera, todos los tiempos de las prendas compatibles estarían en una fracción
-de la primera). Así, recorrería todas las prendas buscando aquellas que no estuvieran en un lavado y asignandoles un lavado
-específico con sus compatibles.
-Luego, le realice una pequeña modificación a esta implementación que trajo mejores resultados.
-La diferencia se encuentra en que hacer cuando la próxima prenda a analizar ya se encuentra en un lavado.
-En el caso ya nombrado, no se hace nada, es decir que cuando se analiza una prenda que ya está en un lavado se pasa a 
-analizar la siguiente.
-En la nueva versión, en vez de pasar a la siguiente se analiza la prende. Lo que hago es ver que prendas compatibles a
-la prenda en analisis todavía no se encuentran en un lavado. De esta manera, hago que las prendas compatibles a la misma
-queden incorporadas a un lavado que tarde lo que tarda en lavarse la prenda en cuestión.
-Esta segunda implementación surgió al haberme dado cuenta que en la primera versión se hacían lavados de más.
-Como esta segunda versión dió mejores resultados opté por quedarme con la misma.
+que menos tiempo tarde sería hacer un único lavado. De esta manera, el único lavado que se haga duraría el tiempo que tarde
+en limpiarse la prenda más sucia. Todo el resto de los tiempos de lavado de las otras prendas quedarían encapsuladas
+en el tiempo de esta última.
+Como, en cambio, en este problema hay incompatibilidades, hay que analizar que prendas podrían ir con cuales.
+Tiendo la prendas ordenadas por tiempo de lavado descendente (teniendo en cuenta la idea anterior), lo que hice fue ir
+recorriendo las prendas en ese orden e ir viendo que lavado asignarles. Para la primera prenda, la más sucia, como no
+había un lavado existente le creo uno nuevo y se lo asigno. Para la segunda prenda, primero analizo si puede ir en el
+lavado ya creado (siendo que es compatible), si no lo es le creo uno nuevo, sino lo asigno al mismo. Para la tercera prenda,
+recorro los lavados existentes y me fijo si lo puedo asignar, en caso de no poder le creo uno nuevo. Y así para todas las
+prendas.
+Lo que intente hacer es darle prioridad al lavado de la prenda más sucia (ya que es la que más tiempo de lavado puede
+encubrir de las otras prendas por ser el mayor).
+Una vez finalizado, me dió que todos los lavados tardaban un tiempo total de 63. Luego, para no quedarme con ese
+resultado unicamente, probé lo que daba si no ordenaba las prendas por tiempo de lavado descendente y para mi sorpresa
+dió un tiempo menor (un tiempo de 61). Esto me llevó a pensar que posiblemente haya uno que tarde aún menos, pero
+al haber 20 prendas hay 20! posibles permutaciones de las mismas, lo que es un número demasiado grande para probar uno
+por uno.
+Finalmente, considerando que el resultado al que llegué no es grande, opté por dejar la primera solución, ya que
+es la que más sentido lógico tiene para mi.
 
 Comentarios finales:
-Esta es una primera entrega, por lo que seguiré pensando en mejores formas de realizar los lavados e intentaré
-analizarlo con algún algoritmo que me permita ver más posibilidades.
+Me pareció muy interesante el ejercicio y me hubiese encantado tener el tiempo y la tecnología necesaria para
+poder chequear si había efectivamente una permutación de las 20 prendas que de un resultado menor que 61.
