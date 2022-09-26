@@ -2,3 +2,27 @@ TP Lavados - Modelos y Optimización 1
 
 Nombre: Florencia Sardella
 Padrón: 105717
+
+Impresión del problema:
+Para este segunda entrega siento que el problema reside en el volumen de prendas y sus incompatibilidades. Ya que ahora 
+el problema pasó a tener 385 prendas que son muchas más que en el caso de la entrega uno. En principio, tenía miedo de
+cuanto iba a tardar el procesamiento de todos los datos así como también la ejecución del algoritmo.
+
+Ideas:
+Al haber tenido un buen resultado en la entrega uno, decidí usar el mismo algoritmo. Con él, primero ordeno las prendas
+en orden descendente de tiempos de lavado con la idea que el tiempo de un lavado es el tiempo que tarda en lavarse la
+prenda más sucia. Con esto en mente, la idea es que la prenda más sucia (la primera que se analiza), englobe los tiempos
+de lavado de otras prendas con menor tiempo (siempre que sean compatibles). Con estos se busca tener una menor cantidad de 
+lavados y por ende un menor tiempo de lavado total. Luego, la idea del algoritmo es la misma que la de la primera entrega
+se van recorriendo las prendas ordenadas y se les asigna un número de lavado. La idea es por cada prenda recorrer los
+lavados existentes y ver si puede introducirse a alguno (es decir, ver que sea compatible con todas las prendas ya 
+agregadas), en caso de que no se pueda se crea un nuevo lavado y se introduce la prenda.
+
+Comentarios finales:
+A diferencia de la entrega uno, tuve que modificar la condición que comprueba las compatibilidades de las prendas.
+En la implementación actual agrego el chequeo de que la prenda en análisis tenga incompatibles ya que al intentar ejecutarlo
+por primera vez me lanzó un error (en la entrega 1 no sucedía ya que todas las prendas que se analizaban tenían incompatibles).
+Por esta misma cuestión, tuve que hacer el chequeo de incompatibilidades en ambas direcciones, es decir, chequear que una 
+prenda 1 sea compatible con una prenda 2 y viceversa.
+En general, me pareció un desafio interesante tener que probar el algoritmo con un volumen de datos más grande ya que
+no sabía si seguiría funcionando. El resultado del tiempo total de todos los lavados me dió 485.
