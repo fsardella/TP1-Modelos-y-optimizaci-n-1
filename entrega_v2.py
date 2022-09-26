@@ -21,7 +21,10 @@ def obtener_datos_enunciado():
                 tiempos[int(prenda)] = int(tiempo)
     return cant_prendas, incompatibilidades, tiempos
 
-def armar_lavados(prendas, incompatiblidades):
+def chequear_incompatibilidad(prenda1, prenda2, incompatibilidades):
+    return (prenda1 in incompatibilidades.keys() and prenda2 in incompatibilidades[prenda1]) or (prenda2 in incompatibilidades.keys() and prenda1 in incompatibilidades[prenda2])
+
+def armar_lavados(prendas, incompatibilidades):
     ''' Recibe una lista de prendas y un diccionario que tiene como clave
         el número de una prenda y como valor una lista con las prendas
         incompatibles a la misma.
@@ -38,7 +41,7 @@ def armar_lavados(prendas, incompatiblidades):
         for n_lavado, prendas_lavado in lavados.items():
             agregar_prenda = True
             for prenda_lavado in prendas_lavado:
-                if prenda_lavado in incompatiblidades and prenda in incompatiblidades[prenda_lavado]:
+                if chequear_incompatibilidad(prenda_lavado, prenda, incompatibilidades):
                     # si en el lavado hay una prenda incompatible no se puede agregar al mismo
                     agregar_prenda = False
             if agregar_prenda:
@@ -82,6 +85,11 @@ def main():
     lavados_ordenados = armar_lavados(prendas_ordenadas, incompatibilidades)
     print(f"El lavado ordenado tarda {chequear_tiempos(lavados_ordenados, tiempos)}")
 
+
+    print()
+    print()
+    print()
+    print(lavados_ordenados)
     cargar_resultado(lavados_ordenados)
 
 main()
