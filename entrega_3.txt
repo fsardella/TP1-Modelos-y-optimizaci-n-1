@@ -1,0 +1,21 @@
+TP Lavados - Modelos y Optimización 1
+
+Nombre: Florencia Sardella
+Padrón: 105717
+
+Impresión del problema:
+Para esta entrega del trabajo práctico se tuvo en cuenta todo el conocimiento adquirido en las realizaciones
+de las entregas anteriores, incorporando también las herramientas aprendidas en la materia.
+Habiendo ya analizado la situación problematica desde otra perspectiva y ya conociendo el funcionamiento fue más
+sencillo plantear la solución, además teniendo en cuenta todo lo aprendido en clase. Me pareció muy interesante usar
+el mismo problema pero analizandolo desde otra perpectiva. Lo que creó que consideré mas díficil fue dejar de pensar 
+el problema como algo iterativo.
+
+Ideas:
+Teniendo en cuenta lo aprendido en las entregas anteriores, decidí encarar el modelo inspirandome en el problema de 
+"Schedulling" y en el problema de la "mochila". La justificación a esto se encuentra en el análisis realizado en el 
+pdf de la entrega.
+
+Comentarios finales:
+Me pareció muy interesante el ejercicio y aportó mucho a mis conocimientos haber incorporado al mismo tp con el que 
+se venía trabajando el material teórico analizado en la materia.
